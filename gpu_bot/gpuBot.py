@@ -1,21 +1,38 @@
 #!/usr/bin/env python3
 
-import time
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 
 
 driver = webdriver.Chrome()
 driver.implicitly_wait(10)
-driver.get("https://www.bestbuy.com/site/lenovo-chromebook-duet-10-1-tablet-128gb-with-keyboard-ice-blue-iron-gray/6401727.p?skuId=6401727")
+# link to product you want
+driver.get("https://www.bestbuy.com/site/acer-chromebook-spin-514-convertible-14-full-hd-touch-ryzen-3-3250c-4gb-ddr4-memory-64gb-emmc-flash-memory/6447818.p?skuId=6447818")
 
 def main():
-    buyItem()
+    _checkStock()
 
-def buyItem():
+def _checkStock():
+    stock = False
+
+    while not stock:
+
+        try:
+            addtocartbtn = driver.find_element_by_class_name("btn-disabled")
+            print("still out of stock")
+
+            driver.refresh()
+        except:
+
+            _buyItem()
+            stock = True
+
+        
+
+def _buyItem():
     # finds add to cart button and clicks it
-    element = driver.find_element_by_class_name("add-to-cart-button")
-    element.click()
+    addtocartbtn = driver.find_element_by_class_name("add-to-cart-button")
+    addtocartbtn.click()
     
     # finds go to cart button and clicks it
     gotocartbtn = driver.find_element_by_class_name("go-to-cart-button")
@@ -34,9 +51,9 @@ def buyItem():
     
     #fills in contact info
     email = driver.find_element_by_id("user.emailAddress")
-    email.send_keys("cmontalvo360@yahoo.com")
+    email.send_keys("cambam@yahoo.com")
     phonenum = driver.find_element_by_id("user.phone")
-    phonenum.send_keys("2532927776")
+    phonenum.send_keys("2532239878")
 
     # continue to payment screen
     contbtn = driver.find_element_by_class_name("button--continue")
@@ -54,7 +71,7 @@ def buyItem():
     addr_toggle = driver.find_element_by_class_name("autocomplete__toggle")
     addr_toggle.click()
     address = driver.find_element_by_id("payment.billingAddress.street")
-    address.send_keys("11223 72nd Avenue Ct E")
+    address.send_keys("12345 82nd ave e")
     city = driver.find_element_by_id("payment.billingAddress.city")
     city.send_keys("tacoma")
     state = Select(driver.find_element_by_id("payment.billingAddress.state"))
