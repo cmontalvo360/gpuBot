@@ -1,2 +1,2 @@
 # gpuBot
-a script to buy graphics or whatever
+a script to buy graphics cards or whatever from best buy
